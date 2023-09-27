@@ -28,11 +28,11 @@ resource "aws_cloudfront_distribution" "site_cloudfront" {
 #    origin_id           = "note.soy.s3.us-east-1.amazonaws.com"
     origin_id           = aws_s3_bucket.site_bucket.bucket_regional_domain_name
     # TODO local terraform version is hilariously out of date
-    # origin_access_control_id = aws_cloudfront_origin_access_control.s3_site_access.id
+#    origin_access_control_id = aws_cloudfront_origin_access_control.s3_site_access.id
     # TODO  ???? this is the part that's always fucked up - get it right and in code
-#    s3_origin_config {
-#      origin_access_identity = "origin-access-identity/cloudfront/ABCDEFG1234567"
-#    }
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.s3_access.cloudfront_access_identity_path
+    }
   }
 
   is_ipv6_enabled     = true
@@ -66,4 +66,8 @@ resource "aws_cloudfront_distribution" "site_cloudfront" {
 #    bucket = aws_s3_bucket.cloudfront_logging.bucket_domain_name
 #  }
 
+}
+
+resource "aws_cloudfront_origin_access_identity" "s3_access" {
+  comment = "S3 Origin access"
 }
