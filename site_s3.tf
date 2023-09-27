@@ -1,5 +1,5 @@
 resource aws_s3_bucket site_bucket {
-  bucket = var.site_bucket_name
+  bucket = local.site_bucket_name
 }
 
 resource aws_s3_bucket_policy site_bucket_policy {

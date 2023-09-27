@@ -15,7 +15,7 @@ resource "aws_route53_record" "site_acm_verification_record" {
   zone_id         = var.route53_hosted_zone_id
 }
 
-resource "aws_route53_record" "notesoy_cloudfront_ip4_record" {
+resource "aws_route53_record" "site_cloudfront_ip4_record" {
 
   name    = var.domain_name
   type    = "A"
@@ -28,7 +28,7 @@ resource "aws_route53_record" "notesoy_cloudfront_ip4_record" {
   }
 }
 
-resource "aws_route53_record" "notesoy_cloudfront_ip6_record" {
+resource "aws_route53_record" "site_cloudfront_ip6_record" {
 
   name    = var.domain_name
   type    = "AAAA"

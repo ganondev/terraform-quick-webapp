@@ -2,7 +2,7 @@ resource "aws_cloudfront_distribution" "site_cloudfront" {
 
   enabled = true
 
-  aliases = var.cloudfront_aliases
+  aliases = local.cloudfront_aliases
 
   default_cache_behavior {
 

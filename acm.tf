@@ -1,6 +1,6 @@
 resource "aws_acm_certificate" "site_cert_request" {
-  domain_name               = "note.soy"
-  subject_alternative_names = ["*.note.soy"]
+  domain_name               = var.domain_name
+  subject_alternative_names = var.acm_alternative_names
   validation_method         = "DNS"
 }
 

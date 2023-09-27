@@ -13,10 +13,15 @@ variable "acm_alternative_names" {
 
 variable "site_bucket_name" {
   type = string
-  default = var.domain_name
+  default = null
 }
 
 variable cloudfront_aliases {
   type = list(string)
-  default = [var.domain_name]
+  default = null
+}
+
+locals {
+  site_bucket_name = coalesce(var.site_bucket_name, var.domain_name)
+  cloudfront_aliases = coalesce(var.cloudfront_aliases, [var.domain_name])
 }
