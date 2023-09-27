@@ -9,7 +9,6 @@ resource "aws_cloudfront_distribution" "site_cloudfront" {
     cache_policy_id  = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-#    target_origin_id = "note.soy.s3.us-east-1.amazonaws.com"
     target_origin_id = aws_s3_bucket.site_bucket.bucket_regional_domain_name
 
     compress = true
@@ -23,16 +22,9 @@ resource "aws_cloudfront_distribution" "site_cloudfront" {
   origin {
     connection_attempts = 3
     connection_timeout  = 10
-#    domain_name         = "note.soy.s3.us-east-1.amazonaws.com"
     domain_name         = aws_s3_bucket.site_bucket.bucket_regional_domain_name
-#    origin_id           = "note.soy.s3.us-east-1.amazonaws.com"
     origin_id           = aws_s3_bucket.site_bucket.bucket_regional_domain_name
-    # TODO local terraform version is hilariously out of date
-#    origin_access_control_id = aws_cloudfront_origin_access_control.s3_site_access.id
-    # TODO  ???? this is the part that's always fucked up - get it right and in code
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.s3_access.cloudfront_access_identity_path
-    }
+    origin_access_control_id = aws_cloudfront_origin_access_control.s3_access_control.id
   }
 
   is_ipv6_enabled     = true
@@ -68,6 +60,10 @@ resource "aws_cloudfront_distribution" "site_cloudfront" {
 
 }
 
-resource "aws_cloudfront_origin_access_identity" "s3_access" {
-  comment = "S3 Origin access"
+resource "aws_cloudfront_origin_access_control" "s3_access_control" {
+  name                              = aws_s3_bucket.site_bucket.bucket_regional_domain_name
+  description                       = "Quick webapp origin control"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
 }
