@@ -23,3 +23,9 @@ resource github_actions_secret aws_secret_key {
   secret_name = "AWS_SECRET_KEY"
   plaintext_value = aws_iam_access_key.s3_deploy_user_secrets.secret
 }
+
+resource github_actions_secret site_bucket_name {
+  repository  = github_repository.frontend_repository.name
+  secret_name = "BUCKET_NAME"
+  plaintext_value = aws_s3_bucket.site_bucket.bucket
+}
