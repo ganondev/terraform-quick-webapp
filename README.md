@@ -18,7 +18,12 @@ certainly won't be the last time I do this.
   * S3 origin configured for access via origin access control
 * ### S3
   * An S3 bucket
+  * A deployment IAM user with PutObject permissions
   * Not a lot to it
+* ### Github
+  * A repository preconfigured with access keys secrets for the S3 deploy user
+  * Template for s3 deployment on merge to `main`
+  * **Note:** the repository will be added to whatever organization is associated with the authentication for your `github` provider 
 
 ## Prerequisites needed:
 * A Route53 hosted zone in the desired AWS account with the desired domain name
@@ -29,9 +34,10 @@ certainly won't be the last time I do this.
   * Route53 hosted zones + records
   * ACM requests
   * Creating IAM policies (for S3)
+  * Creating IAM users (for S3 deploy user)
+  * Generating access keys (for S3 deploy user)
   * **Please let me know if I missed anything**
 
 ## Future:
-* Creating a frontend codebase with CI into the S3 bucket
 * Optionally preconfiguring an IAM user with necessary permissions, somehow
 * Infrastructure for an API Gateway + Lambda backend
