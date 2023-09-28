@@ -26,7 +26,13 @@ variable cloudfront_aliases {
   description = "Any aliases for the cloudfront distribution. By default this just be an array containing domain_name."
 }
 
+variable frontend_repository_name {
+  type = string
+  default = null
+}
+
 locals {
   site_bucket_name = coalesce(var.site_bucket_name, var.domain_name)
   cloudfront_aliases = coalesce(var.cloudfront_aliases, [var.domain_name])
+  frontend_repository_name = coalesce(var.frontend_repository_name, var.domain_name)
 }
